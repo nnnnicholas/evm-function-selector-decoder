@@ -1,0 +1,16 @@
+{
+  "name": "decode-evm-function-selectors-gui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^5.5.4",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "description": ""
+}

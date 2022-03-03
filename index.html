@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Ethereum/evm encoded function signature decoder</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+      type="application/javascript"
+    ></script>
+  </head>
+  <body>
+    <style>
+      html,
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h3 {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <h1>ethereum/evm encoded function signature decoder</h1>
+    <p>
+      This tool helps you translate an encoded function signature such as
+      <code>0x3a66e193</code> into its function name, <code>nameLostMana</code>.
+    </p>
+    <h3>input encoded function signature</h3>
+    <br />
+    <input id="selector" type="text" placeholder="0x..." />
+    <br /><br />
+    <h3>paste ABI</h3>
+    <br />
+    note: you can copy it from the Contract ABI section of a verified Etherscan
+    page<br />
+    <textarea
+      id="ABI"
+      cols="70"
+      rows="14"
+      placeholder='[
+  {
+    "anonymous": false,
+      "inputs": ...
+    '
+    ></textarea>
+    <br />
+    <button id="decodeButton">decode</button>
+    <br /><br />
+
+    <h3>results</h3>
+    <textarea id="results"></textarea>
+  </body>
+  <script>
+    // import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js";
+
+    $("#decodeButton").click(decode);
+    function decode() {
+      let sel = $("#selector").val();
+      let abi = $("#ABI").val();
+      let res = $("#results");
+      try {
+        if (sel != "" && abi != "") {
+          let iface = new ethers.utils.Interface(abi);
+          let result = iface.getFunction(sel).name;
+          console.log("result: " + result);
+          res.text(result);
+        } else {
+          alert("you must input a selector AND an ABI");
+        }
+      } catch (error) {
+        console.error(error);
+        res.text("error: check that selector and abi are correctly formatted");
+      }
+    }
+  </script>
+</html>
